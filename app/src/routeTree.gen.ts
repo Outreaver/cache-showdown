@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CheatsheetRouteImport } from './routes/cheatsheet'
+import { Route as PlaygroundRouteImport } from './routes/playground'
+import { Route as LessonsSlugRouteImport } from './routes/lessons/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheatsheetRoute = CheatsheetRouteImport.update({
+  id: '/cheatsheet',
+  path: '/cheatsheet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaygroundRoute = PlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LessonsSlugRoute = LessonsSlugRouteImport.update({
+  id: '/lessons/$slug',
+  path: '/lessons/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cheatsheet': typeof CheatsheetRoute
+  '/playground': typeof PlaygroundRoute
+  '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cheatsheet': typeof CheatsheetRoute
+  '/playground': typeof PlaygroundRoute
+  '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cheatsheet': typeof CheatsheetRoute
+  '/playground': typeof PlaygroundRoute
+  '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/cheatsheet' | '/playground' | '/lessons/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/cheatsheet' | '/playground' | '/lessons/$slug'
+  id: '__root__' | '/' | '/cheatsheet' | '/playground' | '/lessons/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CheatsheetRoute: typeof CheatsheetRoute
+  PlaygroundRoute: typeof PlaygroundRoute
+  LessonsSlugRoute: typeof LessonsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cheatsheet': {
+      id: '/cheatsheet'
+      path: '/cheatsheet'
+      fullPath: '/cheatsheet'
+      preLoaderRoute: typeof CheatsheetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playground': {
+      id: '/playground'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lessons/$slug': {
+      id: '/lessons/$slug'
+      path: '/lessons/$slug'
+      fullPath: '/lessons/$slug'
+      preLoaderRoute: typeof LessonsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CheatsheetRoute: CheatsheetRoute,
+  PlaygroundRoute: PlaygroundRoute,
+  LessonsSlugRoute: LessonsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

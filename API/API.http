@@ -1,6 +1,16 @@
 @API_HostAddress = http://localhost:5201
 
-GET {{API_HostAddress}}/weatherforecast/
-Accept: application/json
+### 1st request: full 200 with an ETag
+GET {{API_HostAddress}}/api/demo/etag?session=http-file
+
+### Conditional request: should return 304 Not Modified
+GET {{API_HostAddress}}/api/demo/etag?session=http-file
+If-None-Match: "v1"
+
+### Change the resource, then repeat the conditional request: now 200
+POST {{API_HostAddress}}/api/session/http-file/change-resource
+
+### What reached the server
+GET {{API_HostAddress}}/api/session/http-file/log
 
 ###
