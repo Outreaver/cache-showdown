@@ -15,7 +15,17 @@ const config = defineConfig({
     // Vite's CORS middleware would add `Vary: Origin` to every response, muddying the Vary lesson.
     cors: false,
   },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact()],
+  plugins: [
+    devtools(),
+    tailwindcss(),
+    tanstackStart({
+      // Static build for production: ASP.NET Core serves dist/client from wwwroot next to /api (see API/Program.cs).
+      // Every page linked from the sidebar is prerendered; `_shell.html` is the client-only fallback for other URLs.
+      prerender: { enabled: true, crawlLinks: true },
+      spa: { enabled: true, maskPath: '/?shell' },
+    }),
+    viteReact(),
+  ],
 })
 
 export default config
