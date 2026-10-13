@@ -14,6 +14,8 @@ cd app && npm run dev                        # frontend (proxies /api → :5201)
 cd app && npx tsc --noEmit && npm run lint   # type check + lint (run both before finishing)
 cd app && npx prettier --write src           # format (no semicolons, single quotes)
 cd app && npm run build                      # production build
+docker compose up -d --build                 # both services in containers (app: vite preview, API_URL=http://api:8080)
+docker compose down
 ```
 
 There are no automated tests. Verify behaviour in a real browser (e.g. Playwright MCP): click **Send request** in a lesson

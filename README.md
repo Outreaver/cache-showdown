@@ -6,6 +6,17 @@ revalidated with a `304 Not Modified`, or downloaded everything again.
 
 ## Run it
 
+### With Docker (quickest)
+
+```bash
+docker compose up -d --build   # start both; open http://localhost:3000
+docker compose down            # stop and remove the containers
+```
+
+This serves the production build of the frontend (`vite preview`) and the API on http://localhost:5201.
+
+### Without Docker (for development)
+
 You need the .NET 10 SDK and Node.js.
 
 ```bash
