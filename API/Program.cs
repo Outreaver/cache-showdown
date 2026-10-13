@@ -31,6 +31,10 @@ app.UseStaticFiles(new StaticFileOptions
     },
 });
 
+// Route only after the static files: otherwise routing runs first, the fallback below claims every page URL,
+// and UseDefaultFiles/UseStaticFiles step aside, so each page gets _shell.html instead of its prerendered HTML.
+app.UseRouting();
+
 app.MapDemoEndpoints();
 
 // Any other URL gets the client-only shell, which renders the app's own 404 page.
