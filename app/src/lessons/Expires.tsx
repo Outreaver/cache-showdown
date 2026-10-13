@@ -39,11 +39,16 @@ export function Expires() {
 
       <H2>Why max-age replaced it</H2>
       <P>
-        A date depends on clocks. If the server&apos;s clock or the user&apos;s
-        clock is wrong, an <C>Expires</C> date can be already in the past (never
-        cached) or far in the future (cached way too long). <C>max-age</C> is a
-        duration, which avoids that problem. Also, an invalid <C>Expires</C>{' '}
-        value (like <C>0</C>) simply means &quot;already expired&quot;.
+        A date depends on clocks. Old HTTP/1.0 caches compared <C>Expires</C>{' '}
+        with their <em>own</em> clock, so a cache whose clock was wrong kept
+        copies far too long or not at all. (Modern browsers measure the lifetime
+        as <C>Expires</C> minus the response&apos;s <C>Date</C>, both written by
+        the server, so a wrong clock on the user&apos;s computer matters much
+        less today.) A date is also easy to get wrong in config: a hard-coded{' '}
+        <C>Expires</C> that nobody updates is soon in the past, and the response
+        is then never fresh. <C>max-age</C> is a duration, which avoids all of
+        that. Also, an invalid <C>Expires</C> value (like <C>0</C>) simply means
+        &quot;already expired&quot;.
       </P>
       <P>
         <strong>

@@ -15,7 +15,7 @@ export const headerDocs: Record<string, string> = {
   'if-modified-since':
     'Sent by the browser: "I have a copy from this date. Only send a body if it changed since."',
   pragma:
-    'Ancient HTTP/1.0 header. `Pragma: no-cache` is the old spelling of `Cache-Control: no-cache`.',
+    'Deprecated HTTP/1.0 header. In a request, `Pragma: no-cache` is the old way to ask caches to revalidate. In a response it has no defined meaning.',
   'accept-language': 'Sent by the browser: which languages the user prefers.',
 }
 

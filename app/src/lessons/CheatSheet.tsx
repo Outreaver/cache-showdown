@@ -23,7 +23,7 @@ const recipes: Array<{
     what: 'Public data that can be a bit old',
     example: '/api/products, /api/news',
     header: 'public, max-age=60, stale-while-revalidate=300',
-    why: 'Fast for everyone, at most a minute or so behind.',
+    why: 'Fast for everyone. Usually under a minute behind; at worst about 6 minutes (60 s fresh + 300 s stale-while-revalidate).',
   },
   {
     what: 'The current user’s data',
@@ -35,7 +35,7 @@ const recipes: Array<{
     what: 'Sensitive data',
     example: '/api/bank/balance, one-time tokens',
     header: 'no-store',
-    why: 'Never written to disk, never kept anywhere.',
+    why: 'Never written to the HTTP cache or a CDN, so nothing ends up on disk.',
   },
   {
     what: 'Files without a hash that rarely change',
@@ -51,7 +51,7 @@ const glossary: Array<[string, string]> = [
   ['Shared cache', 'Serves many users, e.g. a CDN or proxy.'],
   [
     'Cache key',
-    'What a cache looks a copy up by: the URL (+ method, + any headers listed in Vary).',
+    'What a cache looks a copy up by: the URL (+ method, + any headers listed in Vary). Modern browsers also split their cache by the site you are on, so the same URL embedded on two different sites is stored twice.',
   ],
   [
     'Fresh',
@@ -147,8 +147,8 @@ export function CheatSheet() {
           &quot;always revalidate&quot;. Use <C>no-store</C> to not cache.
         </li>
         <li>
-          A long <C>max-age</C> on a URL that never changes (like <C>/app.js</C>
-          ): users get stuck with old code.
+          A long <C>max-age</C> on a file whose content changes but whose URL
+          stays the same (like <C>/app.js</C>): users get stuck with old code.
         </li>
         <li>
           Forgetting <C>Vary</C> when the response depends on a request header:
@@ -181,11 +181,15 @@ app.MapGet("/api/products", (HttpContext ctx) =>
 [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
 public IActionResult Get() => Ok(products);
 
-// Static files: long cache for everything in wwwroot
+// Static files: long cache ONLY for fingerprinted files (Vite puts them in /assets).
+// Everything else, like index.html, must stay fresh: give it no-cache.
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = c =>
-        c.Context.Response.Headers.CacheControl = "public, max-age=31536000, immutable"
+        c.Context.Response.Headers.CacheControl =
+            c.Context.Request.Path.StartsWithSegments("/assets")
+                ? "public, max-age=31536000, immutable"
+                : "no-cache"
 });`}
       </pre>
       <P>

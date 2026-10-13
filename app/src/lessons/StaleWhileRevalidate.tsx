@@ -85,9 +85,9 @@ export function StaleWhileRevalidate() {
       <P>
         Great for content where being a few seconds/minutes behind is fine but
         speed matters: avatars, product lists, news feeds, API data that powers
-        a dashboard. Libraries like SWR and TanStack Query are named after and
-        inspired by this exact idea, just done in JavaScript instead of the HTTP
-        cache.
+        a dashboard. The React library SWR is named after this directive, and
+        libraries like TanStack Query use the same idea, just done in JavaScript
+        instead of the HTTP cache.
       </P>
       <Callout kind="warn" title="Browser support">
         Chrome, Edge and Firefox support <C>stale-while-revalidate</C> in their

@@ -173,7 +173,8 @@ function DecisionFlow() {
       <div className={`${step} border-emerald-200`}>
         <strong>2. Is my copy still fresh?</strong>{' '}
         <span className="text-slate-500">
-          (based on <C>max-age</C> or <C>Expires</C>)
+          (based on <C>max-age</C> or <C>Expires</C>, or a guess from{' '}
+          <C>Last-Modified</C> if neither is sent)
         </span>
         <p className={yes}>
           Yes → use it immediately, don&apos;t even talk to the server. →{' '}

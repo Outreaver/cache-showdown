@@ -123,8 +123,10 @@ export function SharedCaches() {
         fresh for only 180 more seconds.
       </P>
       <P>
-        <C>Pragma: no-cache</C> is an HTTP/1.0 leftover. You only need it for
-        very old clients; modern code uses <C>Cache-Control</C>.
+        <C>Pragma: no-cache</C> is a deprecated HTTP/1.0 leftover. It only has a
+        defined meaning in a <em>request</em> (&quot;please revalidate&quot;);
+        in a response it doesn&apos;t officially mean anything. Modern code uses{' '}
+        <C>Cache-Control</C>.
       </P>
     </>
   )

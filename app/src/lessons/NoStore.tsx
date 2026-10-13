@@ -84,7 +84,11 @@ export function NoStore() {
                 '304, tiny',
                 '200, full body',
               ],
-              ['Can a user see outdated content?', 'No', 'No'],
+              [
+                'Can a user see outdated content?',
+                'No',
+                'No (except via the Back button, see below)',
+              ],
               [
                 'Use it for',
                 'Pages that must be current: index.html, frequently changing data',
@@ -105,6 +109,15 @@ export function NoStore() {
         computers: nothing ends up on disk for the next person to find. But
         don&apos;t use it &quot;just to be safe&quot; everywhere. It throws away
         all the speed benefits, even the cheap 304s.
+      </Callout>
+      <Callout kind="tip" title="Small print: the Back button">
+        <C>no-store</C> controls the <em>HTTP cache</em>. Browsers also have a{' '}
+        <strong>back/forward cache</strong>: when you leave a page, they may
+        keep the whole page alive in memory for a while, so that pressing Back
+        shows it instantly. Some browsers do this even for <C>no-store</C>{' '}
+        pages, and then you see the page as it was, not a fresh copy. That copy
+        stays in memory and is never written to disk. To be safe, a logout
+        should actively clear sensitive data from the page.
       </Callout>
     </>
   )
