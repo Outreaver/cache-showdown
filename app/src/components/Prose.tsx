@@ -137,3 +137,20 @@ export function Directives({ value }: { value: string }) {
     </>
   )
 }
+
+/** A code sample; `html` comes from a `?highlight` import (Shiki, at build time). */
+export function CodeBlock({ title, html }: { title?: string; html: string }) {
+  return (
+    <figure className="my-4 overflow-hidden rounded-lg border border-slate-200 bg-slate-950 text-sm">
+      {title && (
+        <figcaption className="border-b border-slate-800 px-4 py-2 text-xs font-medium text-slate-400">
+          {title}
+        </figcaption>
+      )}
+      <div
+        className="overflow-x-auto font-mono leading-6 [&_pre]:!bg-transparent [&_pre]:px-4 [&_pre]:py-3"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </figure>
+  )
+}
